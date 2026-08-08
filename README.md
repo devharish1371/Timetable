@@ -1,16 +1,36 @@
-# React + Vite
+# Weekly Timetable
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal weekly timetable app with real-time Firebase sync, PIN lock, and responsive mobile/desktop layout.
 
-Currently, two official plugins are available:
+## 🔗 Live App
+**https://devharish1371.github.io/Timetable/**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
+- 🔐 **PIN Lock** (4-digit PIN with AES-256 encryption — data is encrypted before reaching Firebase)
+- 🔄 **Real-time sync** across all devices via Firebase Firestore
+- 📱 **Mobile-friendly** — swipe between days, floating add button
+- 🖥️ **Desktop** — drag to create blocks, resize, move
+- 🏷️ **Categories** with custom colors
+- 📊 **Weekly stats** sidebar
+- 🔍 **Search** to highlight blocks
+- 📋 **Copy week summary** to clipboard
+- ↩️ **Undo** deleted blocks
 
-## React Compiler
+## Deploy Updates
+```bash
+npm run deploy
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Firebase Setup
+- Firestore rules must allow read/write (data is encrypted client-side, PIN required to decrypt)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
+```
